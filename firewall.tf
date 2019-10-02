@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "fw" {
-  name                = "fw"
+  name                = "${var.prefix}-fw-pip"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
   allocation_method   = "Static"
@@ -7,14 +7,14 @@ resource "azurerm_public_ip" "fw" {
 }
 
 resource "azurerm_log_analytics_workspace" "fw" {
-  name                = "seadrill-fw-logs"
+  name                = "${var.prefix}-fw-logs"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
   sku                 = "Free"
 }
 
 resource "azurerm_firewall" "fw" {
-  name                = "seadrill-fw"
+  name                = "${var.prefix}-fw"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
 

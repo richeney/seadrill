@@ -1,12 +1,12 @@
 resource "azurerm_public_ip" "vm0" {
-  name                = "vm0"
+  name                = "${var.prefix}-vm0"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "vm0" {
-  name                = "vm0-nic"
+  name                = "${var.prefix}-vm0-nic"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
 
@@ -19,7 +19,7 @@ resource "azurerm_network_interface" "vm0" {
 }
 
 resource "azurerm_virtual_machine" "vm0" {
-  name                  = "vm0"
+  name                  = "${var.prefix}-vm0"
   location              = azurerm_resource_group.test.location
   resource_group_name   = azurerm_resource_group.test.name
   network_interface_ids = [ azurerm_network_interface.vm0.id ]
@@ -39,7 +39,7 @@ resource "azurerm_virtual_machine" "vm0" {
   }
 
   storage_os_disk {
-    name              = "vm0-os"
+    name              = "${var.prefix}-vm0-os"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"

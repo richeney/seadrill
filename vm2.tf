@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "vm2" {
-  name                = "vm2-nic"
+  name                = "${var.prefix}-vm2-nic"
   location            = azurerm_resource_group.test.location
   resource_group_name = azurerm_resource_group.test.name
 
@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "vm2" {
 }
 
 resource "azurerm_virtual_machine" "vm2" {
-  name                  = "vm2"
+  name                  = "${var.prefix}-vm2"
   location              = azurerm_resource_group.test.location
   resource_group_name   = azurerm_resource_group.test.name
   network_interface_ids = [ azurerm_network_interface.vm2.id ]
@@ -31,7 +31,7 @@ resource "azurerm_virtual_machine" "vm2" {
   }
 
   storage_os_disk {
-    name              = "vm2-os"
+    name              = "${var.prefix}-vm2-os"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"

@@ -1,6 +1,12 @@
+~/seadrill (master) $ az vm list-ip-addresses --output table
+
 VirtualMachine    PublicIPAddresses    PrivateIPAddresses
 ----------------  -------------------  --------------------
 vm0               104.40.180.127       10.0.1.4
-vm1               51.144.108.19        10.1.1.5
-vm2               104.214.238.231      10.2.1.4
-vm2a                                   10.2.1.5
+vm1                                    10.1.1.5
+vm2                                    10.2.1.4
+
+~/seadrill (master) $ az network public-ip show --name fw --output table
+Name    ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
+------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
+fw      seadrill         westeurope           51.144.188.63  IPv4              Static              4                       Succeeded
