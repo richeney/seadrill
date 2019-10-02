@@ -1,10 +1,3 @@
-resource "azurerm_public_ip" "vm2" {
-  name                = "vm2"
-  location            = azurerm_resource_group.test.location
-  resource_group_name = azurerm_resource_group.test.name
-  allocation_method   = "Static"
-}
-
 resource "azurerm_network_interface" "vm2" {
   name                = "vm2-nic"
   location            = azurerm_resource_group.test.location
@@ -14,7 +7,6 @@ resource "azurerm_network_interface" "vm2" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.spoke2-sn1.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.vm2.id
   }
 }
 
