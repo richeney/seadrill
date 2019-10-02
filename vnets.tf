@@ -6,7 +6,7 @@ provider "azurerm" {
 # Create a resource group
 resource "azurerm_resource_group" "test" {
   name     = var.resource_group
-  location = "West Europe"
+  location = var.location
 }
 
 # Hub
@@ -17,6 +17,20 @@ resource "azurerm_virtual_network" "hub" {
   resource_group_name = azurerm_resource_group.test.name
 }
 
+resource "azurerm_subnet" "fw" {
+  name                 = "AzureFirewallSubnet"
+  resource_group_name  = "${azurerm_resource_group.test.name}"
+  virtual_network_name = "${azurerm_virtual_network.hub.name}"
+  address_prefix       = "10.0.0.0/25"
+}
+
+resource "azurerm_subnet" "gw" {
+  name                 = "GatewaySubnet"
+  resource_group_name  = "${azurerm_resource_group.test.name}"
+  virtual_network_name = "${azurerm_virtual_network.hub.name}"
+  address_prefix       = "10.0.0.128/25"
+}
+
 resource "azurerm_subnet" "hub-sn1" {
   name                 = "${var.prefix}-hub-subnet1"
   resource_group_name  = azurerm_resource_group.test.name
@@ -24,12 +38,7 @@ resource "azurerm_subnet" "hub-sn1" {
   address_prefix       = "10.0.1.0/24"
 }
 
-resource "azurerm_subnet" "fw" {
-  name                 = "AzureFirewallSubnet"
-  resource_group_name  = "${azurerm_resource_group.test.name}"
-  virtual_network_name = "${azurerm_virtual_network.hub.name}"
-  address_prefix       = "10.0.99.0/24"
-}
+
 
 # Spoke 1
 resource "azurerm_virtual_network" "spoke1" {

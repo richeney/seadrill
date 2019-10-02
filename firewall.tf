@@ -52,25 +52,8 @@ resource "azurerm_firewall_nat_rule_collection" "test" {
     source_addresses        = [ "*" ]
     destination_addresses   = [ azurerm_public_ip.fw.ip_address ]
     destination_ports       = [ "22" ]
-    translated_address      = "10.1.1.5"
+    translated_address      = azurerm_network_interface.vm1.private_ip_address
     translated_port         = "22"
     protocols = [ "TCP" ]
-  }
-}
-
-resource "azurerm_firewall_application_rule_collection" "test" {
-  name                = "Blacklist"
-  azure_firewall_name = azurerm_firewall.fw.name
-  resource_group_name = azurerm_resource_group.test.name
-  priority            = 100
-  action              = "Deny"
-  rule {
-    name = "No Daily Mail for spoke2"
-    source_addresses = [ "10.2.0.0/16" ]
-    target_fqdns = [ "*.dailymail.co.uk" ]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
   }
 }
